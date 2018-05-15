@@ -10,7 +10,7 @@ module.exports = [
     let responseText = `${title} ${name}`;
 
     responseText += company ? ` from ${company}, ` : ', ';
-    responseText += 'Welcome to Etisalat help desk, How can i help you!!';
+    responseText += `Welcome to Etisalat help desk, How can i help you!! ${JSON.stringify(session.message)}`;
 
     session.send(responseText);
 
