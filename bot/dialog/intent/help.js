@@ -14,7 +14,7 @@ function help(session) {
       suggestions.push(builder.CardAction.imBack(session, msg, msg));
     }
     const msg = new builder.Message(session)
-      .text(`Dear ${name}! Please select your intent from below or type. ${JSON.stringify(session.message)}`)
+      .text(`Dear ${name}! Please select your intent from below or type.`)
       .suggestedActions(
         builder.SuggestedActions.create(
           session, suggestions

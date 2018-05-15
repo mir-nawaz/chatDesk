@@ -36,7 +36,7 @@ function routes(bot) {
 // See https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-recognize-intent-luis
 
   bot.endConversationAction('goodbye', 'Goodbye :)', { matches: /^goodbye/i });
-  bot.beginDialogAction('help', '/help', { matches: /^help/i });
+  // bot.beginDialogAction('help', '/help', { matches: /^help/i });
 
   bot.on('conversationUpdate', (message) => conversationUpdate(message, bot));
 
