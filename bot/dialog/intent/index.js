@@ -2,5 +2,7 @@
 
 module.exports = {
   callBlocked: require('./callBlocked'),
-  defaultIntent: require('./default')
+  defaultIntent: require('./default'),
+  addAllowance: require('./addAllowance'),
+  changeHandset: require('./changeHandset')
 };

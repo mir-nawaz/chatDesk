@@ -1,23 +1,19 @@
 'use strict';
 
-const { callBlocked, defaultIntent } = require('./intent');
+const { callBlocked, defaultIntent, addAllowance, changeHandset } = require('./intent');
 
 const waitIntent = require('./intent/wait');
 const helpIntent = require('./intent/help');
 const greetingIntent = require('./intent/greeting');
-const askContactIntent = require('./intent/askContact');
 const goodByeIntent = require('./intent/goodBye');
 const lastProblemIntent = require('./intent/lastProblem');
 const errorMessageIntent = require('./intent/errorMessage');
-const internalCheckIntent = require('./intent/internalCheck');
 const payBillIntent = require('./intent/payBill');
 const updateDocsIntent = require('./intent/updateDocs');
 const enableVoiceIntent = require('./intent/enableVoice');
 const usageCappedIntent = require('./intent/usageCapped');
-const addAllowanceIntent = require('./intent/addAllowance');
 const restoreSIMIntent = require('./intent/restoreSIM');
 const technicalComplaintIntent = require('./intent/technicalComplaint');
-const changeHandsetIntent = require('./intent/changeHandset');
 const datapackageIntent = require('./intent/datapackage');
 const newdatapackageIntent = require('./intent/newdatapackage');
 
@@ -57,7 +53,6 @@ function routes(bot) {
   bot.dialog('/upGradePlan', upgradeplanIntent)
     .triggerAction({ matches: 'upGradePlan' });
 
-  bot.dialog('/askContact', askContactIntent);
   bot.dialog('/goodbye', goodByeIntent);
   bot.dialog('/lastProblem', lastProblemIntent);
   bot.dialog('/errorMessage', errorMessageIntent);
@@ -67,9 +62,6 @@ function routes(bot) {
 
   bot.dialog('/Greeting', greetingIntent)
     .triggerAction({ matches: 'Greeting' });
-
-  bot.dialog('/internalCheck', internalCheckIntent)
-    .triggerAction({ matches: 'internalCheck' });
 
   bot.dialog('/payBill', payBillIntent)
     .triggerAction({ matches: 'payBill' });
@@ -83,7 +75,7 @@ function routes(bot) {
   bot.dialog('/usageCapped', usageCappedIntent)
     .triggerAction({ matches: 'usageCapped' });
 
-  bot.dialog('/addAllowance', addAllowanceIntent)
+  bot.dialog('/addAllowance', addAllowance)
     .triggerAction({ matches: 'addAllowance' });
 
   bot.dialog('/wait', waitIntent)
@@ -95,7 +87,7 @@ function routes(bot) {
   bot.dialog('/technicalComplaint', technicalComplaintIntent)
     .triggerAction({ matches: 'technicalComplaint' });
 
-  bot.dialog('/changeHandset', changeHandsetIntent)
+  bot.dialog('/changeHandset', changeHandset)
     .triggerAction({ matches: 'changeHandset' });
 
 }
