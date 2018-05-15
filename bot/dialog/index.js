@@ -1,10 +1,10 @@
 'use strict';
 
+const { callBlocked, defaultIntent } = require('./intent');
+
 const waitIntent = require('./intent/wait');
 const helpIntent = require('./intent/help');
-const defaultIntent = require('./intent/default');
 const greetingIntent = require('./intent/greeting');
-const resolveCallIntent = require('./intent/resolveCallBlocked');
 const askContactIntent = require('./intent/askContact');
 const goodByeIntent = require('./intent/goodBye');
 const lastProblemIntent = require('./intent/lastProblem');
@@ -23,7 +23,6 @@ const newdatapackageIntent = require('./intent/newdatapackage');
 
 const upgradeplanIntent = require('./intent/upgradeplan');
 const proactiveIntent = require('./intent/proactive');
-const callsIntent = require('./intent/callsIntent');
 
 const conversationUpdate = require('./events/conversationUpdate');
 const { send, receive, botbuilder, findEntities } = require('./middleware');
@@ -45,6 +44,12 @@ function routes(bot) {
 
   bot.use({ receive: receive, botbuilder: botbuilder, send: send });
 
+  bot.dialog('/', defaultIntent);
+
+  bot.dialog('/callBlocked', _.concat([findEntities], callBlocked))
+    .triggerAction({ matches: 'callBlocked' });
+
+  // -------------------------
   bot.dialog('/proactive', proactiveIntent);
 
   bot.dialog('/datapackage', datapackageIntent)
@@ -56,11 +61,6 @@ function routes(bot) {
   bot.dialog('/upgradeplan', upgradeplanIntent)
     .triggerAction({ matches: 'upgradeplan' });
 
-  bot.dialog('/calls', _.concat([findEntities], callsIntent))
-    .triggerAction({ matches: 'calls' });
-
-  bot.dialog('/', defaultIntent);
-
   bot.dialog('/askContact', askContactIntent);
   bot.dialog('/goodbye', goodByeIntent);
   bot.dialog('/lastProblem', lastProblemIntent);
@@ -71,9 +71,6 @@ function routes(bot) {
 
   bot.dialog('/Greeting', greetingIntent)
     .triggerAction({ matches: 'Greeting' });
-
-  bot.dialog('/resolveCallBlocked', _.concat([findEntities], resolveCallIntent))
-    .triggerAction({ matches: 'resolveCallBlocked' });
 
   bot.dialog('/internalCheck', internalCheckIntent);
   //  .triggerAction({ matches: 'internalCheck' });
