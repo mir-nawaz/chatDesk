@@ -1,3 +1,43 @@
+Thumbs.db
+.DS_Store
 node_modules/
-*.js.map
-package-lock.json
+.vscode/settings.json
+install/
+.npmrc
+
+# logs
+*.log.*
+**/*.log.*
+**/*.log
+
+# blocks
+**/*.block
+
+#lock
+**/*-lock.json
+*-lock.json
+
+# tx
+**/*.tx
+
+# tar files
+**/*.gz
+**/tar.*
+**/*.tar
+**/*.zip
+*.gz
+*.tar.*
+*.tar
+*.zip
+
+# WebStrom indexes idea
+.idea
+**/.idea
+
+# Visual Studio indexes idea
+.vscode
+**/.vscode
+
+**/node_modules
+node_modules
+captures

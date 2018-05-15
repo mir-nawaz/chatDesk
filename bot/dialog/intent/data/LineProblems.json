@@ -1,0 +1,48 @@
+[ 
+  {
+     "P": "Outgoing barred due to charges",
+	 "M": ["is resolved as payment is made","is not resolved since still payment is pending"]
+  },
+  {
+     "P": "Number barred due to registration docs",
+	 "M": ["is resolved as latest documents are provided","is still not resolved due to documents not updated"]
+  }
+  ,
+  {
+     "P": "Sim is not voice enabled",
+	 "M": ["is resolved as data is enabeld now"," is not resolved as data is still not enabled "]
+  },
+  {
+     "P": "Usage cap reached",
+	 "M": ["is resolved as cap is increased","is resolved as we are now in a new month"," is not resolved as cap is still exhausted"]
+  },
+  {
+     "P": "Allownace finished",
+	 "M": ["is resolved as new bundle of 300 SMS was added, How it is going?","is resolved as new bundle of 600 SMS was added, how is it going?"," is not resolved yet and as allowance is still exhausted."]
+  },
+  {
+     "P": "Network Outage",
+	 "M": ["is resolved and we are sorry for inconvenience","is still not resolved as the outage in the region X still continues and hopefully will be resolved in next one hour"]
+  },
+  {
+     "P": "SIM Blocked on stolen",
+	 "M": ["is still blocked and not re-activated","is activated after being reported stolen, we hope every thing was fine with you?"]
+  },
+  {
+     "P": "SIM Blocked by company",
+	 "M": ["is still blocked and not re-activated","is activated after being blocked by your company, did you have any internal discussions with your company personal?"]
+  },
+  {
+     "P": "Handset Issue",
+	 "M": [" and replacement handset was installed at your place? How it is going now?","and replacement handset is being sent to your premises in the next 4 days. Sorry for inconvenience again"]
+  },
+  {
+     "P": "Temporary congestion",
+	 "M": [" for which we are really sorry but now it is resolved."," is still an issue and will be resolved in next 2 hours"]
+  },
+  {
+     "P": "Complaint",
+	 "M": [" number 189834983 for issue XYZ is resolved now. Are things working fine? ","number 189834983 for issue XYZ is still in process and will be resolved in next 2 days"]
+  }
+]
+  
