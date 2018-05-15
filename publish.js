@@ -4,18 +4,16 @@ const zipFolder = require('zip-folder');
 const path = require('path');
 const fs = require('fs');
 const request = require('request');
+const config = require('./config');
 
 const rootFolder = path.resolve('.');
-const zipPath = path.resolve(rootFolder, '../etisalatdesk.zip');
-const kuduApi = 'https://etisalatdesk.scm.azurewebsites.net/api/zip/site/wwwroot';
-const userName = '$etisalatdesk';
-const password = 'kLKumc527JppZXW7F18FYliNjGvyp2CnyK5Fa0T0SKDiHzDzMvFN66E3vn3h';
+const zipPath = path.resolve(rootFolder, config.zipPath);
 
 function uploadZip(callback) {
-  fs.createReadStream(zipPath).pipe(request.put(kuduApi, {
+  fs.createReadStream(zipPath).pipe(request.put(config.kuduApi, {
     auth: {
-      username: userName,
-      password: password,
+      username: config.userName,
+      password: config.password,
       sendImmediately: true
     },
     headers: {
