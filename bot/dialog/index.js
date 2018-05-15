@@ -26,7 +26,10 @@ const proactiveIntent = require('./intent/proactive');
 const callsIntent = require('./intent/callsIntent');
 
 const conversationUpdate = require('./events/conversationUpdate');
-const { send, receive, botbuilder } = require('./middleware');
+const { send, receive, botbuilder, findEntities } = require('./middleware');
+
+const _ = require('lodash');
+
 module.exports = {
   routes: routes
 };
@@ -35,7 +38,7 @@ function routes(bot) {
 // Add a dialog for each intent that the LUIS app recognizes.
 // See https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-recognize-intent-luis
 
-  bot.endConversationAction('goodbye', 'Goodbye :)', { matches: /^goodbye/i });
+  // bot.endConversationAction('goodbye', 'Goodbye :)', { matches: /^goodbye/i });
   // bot.beginDialogAction('help', '/help', { matches: /^help/i });
 
   bot.on('conversationUpdate', (message) => conversationUpdate(message, bot));
@@ -53,7 +56,7 @@ function routes(bot) {
   bot.dialog('/upgradeplan', upgradeplanIntent)
     .triggerAction({ matches: 'upgradeplan' });
 
-  bot.dialog('/calls', callsIntent)
+  bot.dialog('/calls', _.concat([findEntities], callsIntent))
     .triggerAction({ matches: 'calls' });
 
   bot.dialog('/', defaultIntent);
@@ -66,11 +69,11 @@ function routes(bot) {
   bot.dialog('/help', helpIntent);
   //  .triggerAction({ matches: 'help' });
 
-  bot.dialog('/greetings', greetingIntent);
-  //  .triggerAction({ matches: 'greetings' });
+  bot.dialog('/Greeting', greetingIntent)
+    .triggerAction({ matches: 'Greeting' });
 
-  bot.dialog('/resolveCallBlocked', resolveCallIntent);
-  //  .triggerAction({ matches: 'resolveCallBlocked' });
+  bot.dialog('/resolveCallBlocked', _.concat([findEntities], resolveCallIntent))
+    .triggerAction({ matches: 'resolveCallBlocked' });
 
   bot.dialog('/internalCheck', internalCheckIntent);
   //  .triggerAction({ matches: 'internalCheck' });

@@ -3,5 +3,6 @@
 module.exports = {
   send: require('./send'),
   receive: require('./receive'),
-  botbuilder: require('./botbuilder')
+  botbuilder: require('./botbuilder'),
+  findEntities: require('./findEntities')
 };
