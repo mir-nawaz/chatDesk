@@ -1,23 +1,6 @@
 'use strict';
 
-const { callBlocked, defaultIntent, addAllowance, changeHandset } = require('./intent');
-
-const waitIntent = require('./intent/wait');
-const helpIntent = require('./intent/help');
-const greetingIntent = require('./intent/greeting');
-const goodByeIntent = require('./intent/goodBye');
-const lastProblemIntent = require('./intent/lastProblem');
-const errorMessageIntent = require('./intent/errorMessage');
-const payBillIntent = require('./intent/payBill');
-const updateDocsIntent = require('./intent/updateDocs');
-const enableVoiceIntent = require('./intent/enableVoice');
-const usageCappedIntent = require('./intent/usageCapped');
-const restoreSIMIntent = require('./intent/restoreSIM');
-const technicalComplaintIntent = require('./intent/technicalComplaint');
-const datapackageIntent = require('./intent/datapackage');
-const newdatapackageIntent = require('./intent/newdatapackage');
-
-const upgradeplanIntent = require('./intent/upgradeplan');
+const intents = require('./intent');
 
 const conversationUpdate = require('./events/conversationUpdate');
 const { send, receive, botbuilder, findEntities } = require('./middleware');
@@ -29,6 +12,7 @@ module.exports = {
 };
 
 function routes(bot) {
+
 // Add a dialog for each intent that the LUIS app recognizes.
 // See https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-recognize-intent-luis
 
@@ -39,55 +23,41 @@ function routes(bot) {
 
   bot.use({ receive: receive, botbuilder: botbuilder, send: send });
 
-  bot.dialog('/', defaultIntent);
+  bot.dialog('/', intents.default);
+  bot.dialog('/goodbye', intents.goodBye);
+  bot.dialog('/lastProblem', intents.lastProblem);
+  bot.dialog('/errorMessage', intents.errorMessage);
 
-  bot.dialog('/callBlocked', _.concat([findEntities], callBlocked))
+  // LUIS integrated intents
+  bot.dialog('/callBlocked', _.concat([findEntities], intents.callBlocked))
     .triggerAction({ matches: 'callBlocked' });
-
-  bot.dialog('/dataPackage', datapackageIntent)
+  bot.dialog('/dataPackage', intents.dataPackage)
     .triggerAction({ matches: 'dataPackage' });
-
-  bot.dialog('/newDataPackage', newdatapackageIntent)
+  bot.dialog('/newDataPackage', intents.newDataPackage)
     .triggerAction({ matches: 'newDataPackage' });
-
-  bot.dialog('/upGradePlan', upgradeplanIntent)
+  bot.dialog('/upGradePlan', intents.upgradePlan)
     .triggerAction({ matches: 'upGradePlan' });
-
-  bot.dialog('/goodbye', goodByeIntent);
-  bot.dialog('/lastProblem', lastProblemIntent);
-  bot.dialog('/errorMessage', errorMessageIntent);
-
-  bot.dialog('/help', helpIntent)
+  bot.dialog('/help', intents.help)
     .triggerAction({ matches: 'help' });
-
-  bot.dialog('/Greeting', greetingIntent)
-    .triggerAction({ matches: 'Greeting' });
-
-  bot.dialog('/payBill', payBillIntent)
+  bot.dialog('/greeting', intents.greeting)
+    .triggerAction({ matches: 'greeting' });
+  bot.dialog('/payBill', intents.payBill)
     .triggerAction({ matches: 'payBill' });
-
-  bot.dialog('/updateDocs', updateDocsIntent)
+  bot.dialog('/updateDocs', intents.updateDocs)
     .triggerAction({ matches: 'updateDocs' });
-
-  bot.dialog('/enableVoice', enableVoiceIntent)
+  bot.dialog('/enableVoice', intents.enableVoice)
     .triggerAction({ matches: 'enableVoice' });
-
-  bot.dialog('/usageCapped', usageCappedIntent)
+  bot.dialog('/usageCapped', intents.usageCapped)
     .triggerAction({ matches: 'usageCapped' });
-
-  bot.dialog('/addAllowance', addAllowance)
+  bot.dialog('/addAllowance', intents.addAllowance)
     .triggerAction({ matches: 'addAllowance' });
-
-  bot.dialog('/wait', waitIntent)
+  bot.dialog('/wait', intents.wait)
     .triggerAction({ matches: 'wait' });
-
-  bot.dialog('/restoreSIM', restoreSIMIntent)
+  bot.dialog('/restoreSIM', intents.restoreSIM)
     .triggerAction({ matches: 'restoreSIM' });
-
-  bot.dialog('/technicalComplaint', technicalComplaintIntent)
+  bot.dialog('/technicalComplaint', intents.technicalComplaint)
     .triggerAction({ matches: 'technicalComplaint' });
-
-  bot.dialog('/changeHandset', changeHandset)
+  bot.dialog('/changeHandset', intents.changeHandset)
     .triggerAction({ matches: 'changeHandset' });
 
 }
