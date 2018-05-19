@@ -3,7 +3,7 @@
 const intents = require('./intent');
 
 const conversationUpdate = require('./events/conversationUpdate');
-const { send, receive, botbuilder, findEntities } = require('./middleware');
+const { send, receive, botbuilder, findEntities, askContact } = require('./middleware');
 
 const _ = require('lodash');
 
@@ -29,9 +29,9 @@ function routes(bot) {
   bot.dialog('/errorMessage', intents.errorMessage);
 
   // LUIS integrated intents
-  bot.dialog('/callBlocked', _.concat([findEntities], intents.callBlocked))
+  bot.dialog('/callBlocked', _.concat(findEntities, askContact, intents.callBlocked))
     .triggerAction({ matches: 'callBlocked' });
-  bot.dialog('/dataPackage', intents.dataPackage)
+  bot.dialog('/dataPackage', _.concat(findEntities, askContact, intents.dataPackage))
     .triggerAction({ matches: 'dataPackage' });
   bot.dialog('/newDataPackage', intents.newDataPackage)
     .triggerAction({ matches: 'newDataPackage' });

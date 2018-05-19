@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 
-module.exports = identifyAllEntities;
+module.exports = [identifyAllEntities];
 
 function identifyAllEntities(session, args, next) {
   session.conversationData = session.conversationData || {};
