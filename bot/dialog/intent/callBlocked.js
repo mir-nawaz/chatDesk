@@ -1,25 +1,48 @@
 'use strict';
 
 const checkCall = require('../../api/etisalat/checkCallBlocked');
-const builder = require('botbuilder');
 
 module.exports = [callBlocked];
 
 function callBlocked(session) {
   checkCall()
     .then((blockIssues) => {
-      const suggestions = [];
-      const { name } = session.message.address.user;
-      for (const msg of blockIssues) {
-        suggestions.push(builder.CardAction.imBack(session, msg, msg));
+
+      const responseText = blockIssues[0];
+
+      switch (responseText) {
+        case 'Outgoing barred due to charges':
+          session.beginDialog('/payBill');
+          break;
+        case 'Number barred due to registration docs':
+          session.beginDialog('/updateDocs');
+          break;
+        case 'Sim is not voice enabled':
+          session.beginDialog('/enableVoice');
+          break;
+        case 'Usage cap reached':
+          session.beginDialog('/usageCapped');
+          break;
+        case 'Allownace finished':
+          session.beginDialog('/addAllowance');
+          break;
+        case 'Network Outage':
+          session.beginDialog('/wait');
+          break;
+        case 'SIM Blocked on stolen':
+          session.beginDialog('/restoreSIM');
+          break;
+        case 'SIM Blocked by company':
+          session.beginDialog('/restoreSIM');
+          break;
+        case 'Handset Issue':
+          session.beginDialog('/changeHandset');
+          break;
+        case 'Temporary congestion':
+          session.beginDialog('/technicalComplaint');
+          break;
+        default:
+          session.beginDialog('/help');
       }
-      const msg = new builder.Message(session)
-        .text(`Dear ${name}! We found the below problems with your SIM, Please select to resolve.`)
-        .suggestedActions(
-          builder.SuggestedActions.create(
-            session, suggestions
-          ));
-      session.send(msg);
-      session.endDialog();
     });
 }
