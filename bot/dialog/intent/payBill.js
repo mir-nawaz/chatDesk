@@ -6,7 +6,7 @@ module.exports = [
   function(session, results, next) {
     const billAMount = Math.floor(Math.random() * 100);
     session.userData.billAmount = billAMount;
-    builder.Prompts.choice(session, `Your calls are barred due to non bill payment. You have outstanding of ${billAMount}.00 AED on number ${session.userData.contact} would you like to pay`, 'Pay now|Pay later', { listStyle: builder.ListStyle.button });
+    builder.Prompts.choice(session, `Your calls are barred due to non bill payment. You have outstanding of ${billAMount}.00 AED on number ${session.conversationData.phoneNumber} would you like to pay`, 'Pay now|Pay later', { listStyle: builder.ListStyle.button });
   },
   function(session, results, next) {
 

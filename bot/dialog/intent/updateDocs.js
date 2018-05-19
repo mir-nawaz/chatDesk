@@ -5,7 +5,7 @@ const builder = require('botbuilder');
 module.exports = [
   function(session, results, next) {
 
-    builder.Prompts.choice(session, `Your calls are barred due to registration documents expirty on number ${session.userData.contact} would you like to provide latest documents`, 'Update Now|Update later', { listStyle: builder.ListStyle.button });
+    builder.Prompts.choice(session, `Your calls are barred due to registration documents expirty on number ${session.conversationData.phoneNumber} would you like to provide latest documents`, 'Update Now|Update later', { listStyle: builder.ListStyle.button });
 
   },
   function(session, results, next) {

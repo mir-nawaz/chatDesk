@@ -27,8 +27,6 @@ module.exports = [
   function(session, results, next) {
     let response = _.get(results, 'response.entity');
     response = response || _.get(results, 'response');
-    console.log('dialog stack ----------------------------------'); // eslint-disable-line no-console
-    console.log(session.dialogStack()); // eslint-disable-line no-console
     if (response && response === 'yes') {
       session.conversationData.phoneNumberConfirm = true;
     }

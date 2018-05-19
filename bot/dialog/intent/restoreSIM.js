@@ -4,7 +4,7 @@ const builder = require('botbuilder');
 
 module.exports = [
   function(session, results, next) {
-    builder.Prompts.choice(session, `Looks like your SIM on number ${session.userData.contact} is blocked would you like to restore`, 'Now|Later', { listStyle: builder.ListStyle.button });
+    builder.Prompts.choice(session, `Looks like your SIM on number ${session.conversationData.phoneNumber} is blocked would you like to restore`, 'Now|Later', { listStyle: builder.ListStyle.button });
   },
   function(session, results, next) {
 

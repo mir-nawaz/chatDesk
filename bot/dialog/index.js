@@ -29,7 +29,7 @@ function routes(bot) {
   bot.dialog('/errorMessage', intents.errorMessage);
 
   // LUIS integrated intents
-  bot.dialog('/callBlocked', _.concat(findEntities, askContact, intents.callBlocked))
+  bot.dialog('/callBlocked', _.concat(findEntities, intents.lastProblem, askContact, intents.callBlocked))
     .triggerAction({ matches: 'callBlocked' });
   bot.dialog('/dataPackage', _.concat(findEntities, askContact, intents.dataPackage))
     .triggerAction({ matches: 'dataPackage' });

@@ -3,8 +3,12 @@
 module.exports = [
 
   function(session, results, next) {
+    const lastProblemShow = session.conversationData.lastProblemShow || false;
+    const callIssuesChecked = session.conversationData.callIssuesChecked || false;
     session.conversationData = {};
-    session.send('Your Issues has been reported. Thank you for using Etisalat !!!');
+    session.conversationData.lastProblemShow = lastProblemShow;
+    session.conversationData.callIssuesChecked = callIssuesChecked;
+    session.send('Thank you for using Etisalat. Have a nice day !!!'); // check for time and send response
   }
 
 ];

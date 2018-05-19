@@ -1,6 +1,8 @@
 'use strict';
 
 const checkCall = require('../../api/etisalat/checkCallBlocked');
+const insertProblem = require('../service/insertProblem');
+const _ = require('lodash');
 
 module.exports = [callBlocked];
 
@@ -8,12 +10,10 @@ function callBlocked(session) {
   checkCall(session)
     .then((blockIssues) => {
       session.conversationData.callIssues = blockIssues;
-      const responseText = session.conversationData.callIssues[0];
+      const problemTxt = _.get(session, 'conversationData.callIssues[0]');
 
-      session.conversationData.callIssues = blockIssues.splice(0, 1);
-      session.conversationData.callIssues = blockIssues;
-
-      switch (responseText) {
+      insertProblem(problemTxt, blockIssues, session);
+      switch (problemTxt) {
         case 'Outgoing barred due to charges':
           session.beginDialog('/payBill');
           break;

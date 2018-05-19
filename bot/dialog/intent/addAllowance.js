@@ -4,7 +4,7 @@ const builder = require('botbuilder');
 
 module.exports = [
   function(session, results, next) {
-    builder.Prompts.choice(session, `Your allowance has finished for number ${session.userData.contact}. Would you like to try new bundles`, 'Bundle 1|Bundle 2|Later', { listStyle: builder.ListStyle.button });
+    builder.Prompts.choice(session, `Your allowance has finished for number ${session.conversationData.phoneNumber}. Would you like to try new bundles`, 'Bundle 1|Bundle 2|Later', { listStyle: builder.ListStyle.button });
   },
   function(session, results, next) {
     const selection = results.response.entity;
