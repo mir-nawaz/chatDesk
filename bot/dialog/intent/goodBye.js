@@ -3,7 +3,7 @@
 module.exports = [
 
   function(session, results, next) {
-    session.send('Please specify if we can help you with any thing else?');
+    session.send('Your Issues has been reported. Thank you for using Etisalat !!!');
   }
 
 ];

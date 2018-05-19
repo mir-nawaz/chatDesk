@@ -42,6 +42,6 @@ module.exports = [
   },
   function(session) {
     session.userData.planType = '';
-    session.beginDialog('/goodbye');
+    session.beginDialog('/callBlocked');
   }
 ];

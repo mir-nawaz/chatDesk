@@ -5,10 +5,13 @@ const checkCall = require('../../api/etisalat/checkCallBlocked');
 module.exports = [callBlocked];
 
 function callBlocked(session) {
-  checkCall()
+  checkCall(session)
     .then((blockIssues) => {
+      session.conversationData.callIssues = blockIssues;
+      const responseText = session.conversationData.callIssues[0];
 
-      const responseText = blockIssues[0];
+      session.conversationData.callIssues = blockIssues.splice(0, 1);
+      session.conversationData.callIssues = blockIssues;
 
       switch (responseText) {
         case 'Outgoing barred due to charges':
@@ -23,7 +26,7 @@ function callBlocked(session) {
         case 'Usage cap reached':
           session.beginDialog('/usageCapped');
           break;
-        case 'Allownace finished':
+        case 'Allowance finished':
           session.beginDialog('/addAllowance');
           break;
         case 'Network Outage':
@@ -42,7 +45,7 @@ function callBlocked(session) {
           session.beginDialog('/technicalComplaint');
           break;
         default:
-          session.beginDialog('/help');
+          session.beginDialog('/goodbye');
       }
     });
 }

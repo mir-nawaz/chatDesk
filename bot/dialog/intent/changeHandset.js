@@ -30,7 +30,7 @@ module.exports = [
   },
   function(session, results, next) {
 
-    session.beginDialog('/goodbye');
+    session.beginDialog('/callBlocked');
 
   }
 ];
