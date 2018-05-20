@@ -45,6 +45,7 @@ function callBlocked(session) {
           session.beginDialog('/technicalComplaint');
           break;
         default:
+          session.conversationData.issuesReported = true;
           session.beginDialog('/goodbye');
       }
     });

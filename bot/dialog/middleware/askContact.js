@@ -17,6 +17,9 @@ module.exports = [
       session.conversationData.phoneNumber = results.response;
       next();
     }
+    else if (session.conversationData.issuesReported) {
+      next();
+    }
     else if (!_.get(session, 'conversationData.phoneNumberConfirm')) {
       builder.Prompts.choice(session, `Please confirm your contact number '${session.conversationData.phoneNumber}' `, 'yes|no', { listStyle: builder.ListStyle.button });
     }
