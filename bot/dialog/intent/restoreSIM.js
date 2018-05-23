@@ -1,29 +1,20 @@
 'use strict';
 
 const builder = require('botbuilder');
+const form = require('../form');
+const lowerTrim = require('../helper/lowerTrim');
+const _ = require('lodash');
 
-module.exports = [
-  function(session, results, next) {
-    builder.Prompts.choice(session, `Looks like your SIM on number ${session.conversationData.phoneNumber} is blocked would you like to restore`, 'Now|Later', { listStyle: builder.ListStyle.button });
-  },
-  function(session, results, next) {
+function processSubmitAction(session, value) {
+  const defaultErrorMessage = 'Please complete all the input parameters';
 
-    const selection = results.response.entity;
-    if (selection === 'Now') {
-      builder.Prompts.text(session, 'We would like to ask few verification questions, Please provide your date of birth');
-    }
-    else {
-      session.beginDialog('/goodbye');
-    }
-
-  },
-  function(session, results, next) {
-    builder.Prompts.text(session, 'Please specify your pet name');
-  },
-  function(session, results, next) {
-    builder.Prompts.text(session, 'Please specify your last month bill value');
-  },
-  function(session, results, next) {
+  if (!value.dateOfBirth || !value.petName || !value.lastMonthBill) {
+    session.send(defaultErrorMessage);
+  }
+  else {
+    session.conversationData.dateOfBirth = value.dateOfBirth;
+    session.conversationData.petName = value.petName;
+    session.conversationData.lastMonthBill = value.lastMonthBill;
 
     const msg = new builder.Message(session);
     msg.attachmentLayout(builder.AttachmentLayout.carousel);
@@ -37,11 +28,30 @@ module.exports = [
     ]);
 
     session.send(msg);
-    next();
+    session.beginDialog('/goodbye');
+  }
+}
 
+module.exports = [
+  function(session, results, next) {
+    if (session.message && session.message.value) {
+      // A Card's Submit Action obj was received
+      processSubmitAction(session, session.message.value);
+      return;
+    }
+    builder.Prompts.choice(session, `Looks like your SIM on number ${session.conversationData.phoneNumber} is blocked would you like to restore`, 'Now|Later', { listStyle: builder.ListStyle.button });
   },
-  function(session) {
-    session.userData.planType = '';
-    session.beginDialog('/callBlocked');
+  function(session, results, next) {
+
+    const selection = _.get(results, 'response.entity') || _.get(results, 'response');
+    if (lowerTrim(selection) === 'now') {
+      const msg = new builder.Message(session)
+        .addAttachment(form.restoreSIM);
+      session.send(msg);
+    }
+    else {
+      session.beginDialog('/goodbye');
+    }
+
   }
 ];

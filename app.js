@@ -48,12 +48,19 @@ const tableName = 'botdata';
 const azureTableClient = new botbuilderAzure.AzureTableClient(tableName, config['AzureWebJobsStorage']);
 const tableStorage = new botbuilderAzure.AzureBotStorage({ gzipData: false }, azureTableClient);
 
+const inMemoryStorage = new builder.MemoryBotStorage();
+
 // Create your bot with a function to receive messages from the user
 // This default message handler is invoked if the user's utterance doesn't
 // match any intents handled by other dialogs.
 const bot = new builder.UniversalBot(connector);
 
-bot.set('storage', tableStorage);
+if (config.inMemory) {
+  bot.set('storage', inMemoryStorage);
+}
+else {
+  bot.set('storage', tableStorage);
+}
 
 // Make sure you add code to validate these fields
 const luisAppId = config.LuisAppId;
