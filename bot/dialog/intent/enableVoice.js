@@ -1,10 +1,12 @@
 'use strict';
 
 const builder = require('botbuilder');
+const lang = require('../lang');
+const stringInject = require('../helper/stringInject');
 
 module.exports = [
   function(session, results, next) {
-    builder.Prompts.choice(session, `Your SIM is not voice enabled  on number ${session.conversationData.phoneNumber}. Would you like to enable voice`, 'Now|Later', { listStyle: builder.ListStyle.button });
+    builder.Prompts.choice(session, stringInject(lang.getText('voiceEnable'), { phoneNumber: session.conversationData.phoneNumber }), 'Now|Later', { listStyle: builder.ListStyle.button });
   },
   function(session, results, next) {
     const selection = results.response.entity;
@@ -17,7 +19,6 @@ module.exports = [
           .subtitle('')
           .text('')
           .images([builder.CardImage.create(session, 'https://i.imgur.com/C6rPJOO.png')])
-
       ]);
 
       session.send(msg);
@@ -26,6 +27,6 @@ module.exports = [
 
   },
   function(session) {
-    session.beginDialog('/callBlocked');
+    session.beginDialog('/goodbye');
   }
 ];

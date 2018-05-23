@@ -2,6 +2,8 @@
 
 const builder = require('botbuilder');
 const message = require('../../constant/message');
+const lang = require('../lang');
+const stringInject = require('../helper/stringInject');
 
 module.exports = help;
 
@@ -14,7 +16,7 @@ function help(session) {
       suggestions.push(builder.CardAction.imBack(session, msg, msg));
     }
     const msg = new builder.Message(session)
-      .text(`Dear ${name}! Please specify if we can help you with any thing?`)
+      .text(stringInject(lang.getText('helpMsg'), { name: name }))
       .suggestedActions(
         builder.SuggestedActions.create(
           session, suggestions

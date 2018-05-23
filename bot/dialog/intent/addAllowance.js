@@ -1,14 +1,18 @@
 'use strict';
 
 const builder = require('botbuilder');
+const lang = require('../lang');
+const stringInject = require('../helper/stringInject');
+const lowerTrim = require('../helper/lowerTrim');
+const _ = require('lodash');
 
 module.exports = [
   function(session, results, next) {
-    builder.Prompts.choice(session, `Your allowance has finished for number ${session.conversationData.phoneNumber}. Would you like to try new bundles`, 'Bundle 1|Bundle 2|Later', { listStyle: builder.ListStyle.button });
+    builder.Prompts.choice(session, stringInject(lang.getText('addAllowance'), { phoneNumber: session.conversationData.phoneNumber }), 'Bundle 1|Bundle 2|Later', { listStyle: builder.ListStyle.button });
   },
   function(session, results, next) {
-    const selection = results.response.entity;
-    if (selection !== 'Later') {
+    const selection = _.get(results, 'response.entity') || _.get(results, 'response');
+    if (lowerTrim(selection) !== 'later') {
       const msg = new builder.Message(session);
 
       msg.attachmentLayout(builder.AttachmentLayout.carousel);
@@ -16,22 +20,22 @@ module.exports = [
         new builder.HeroCard(session)
           .title('')
           .subtitle('')
-          .text('Would you like to add Bundle 1')
+          .text(lang.getText('addBundle1'))
           .images([builder.CardImage.create(session, 'https://i.imgur.com/mudabG3.png')])
           .buttons([
-            builder.CardAction.imBack(session, 'Bundle 1', 'Upgrade')
+            builder.CardAction.imBack(session, 'Bundle 1', 'Bundle 1')
           ]),
         new builder.HeroCard(session)
           .title('')
           .subtitle('')
-          .text('Would you like to add Bundle 2')
+          .text(lang.getText('addBundle2'))
           .images([builder.CardImage.create(session, 'https://i.imgur.com/DA9CBuL.png')])
           .buttons([
-            builder.CardAction.imBack(session, 'Bundle2', 'Upgrade')
+            builder.CardAction.imBack(session, 'Bundle 2', 'Bundle 2')
           ])
 
       ]);
-      session.send(msg);
+      builder.Prompts.choice(session, msg, ['Bundle 1', 'Bundle 2'], { retryPrompt: msg });
     }
     else {
       session.endDialog();
@@ -39,29 +43,29 @@ module.exports = [
     }
   },
   function(session, results, next) {
-    const selection = results.response.entity;
-    if (selection === 'Bundle 1') {
+    const selection = _.get(results, 'response.entity') || _.get(results, 'response');
+    if (lowerTrim(selection) === 'bundle 1') {
       const msg = new builder.Message(session);
       msg.attachmentLayout(builder.AttachmentLayout.carousel);
       msg.attachments([
         new builder.HeroCard(session)
           .title('')
           .subtitle('')
-          .text('Adding Bundle 1 to the package')
+          .text(lang.getText('addingBundle1'))
           .images([builder.CardImage.create(session, 'https://i.imgur.com/C6rPJOO.png')])
 
       ]);
 
       session.send(msg);
     }
-    if (selection === 'Bundle 2') {
+    if (lowerTrim(selection) === 'bundle 2') {
       const msg = new builder.Message(session);
       msg.attachmentLayout(builder.AttachmentLayout.carousel);
       msg.attachments([
         new builder.HeroCard(session)
           .title('')
           .subtitle('')
-          .text('Adding Bundle 2 to the package')
+          .text(lang.getText('addingBundle2'))
           .images([builder.CardImage.create(session, 'https://i.imgur.com/C6rPJOO.png')])
 
       ]);

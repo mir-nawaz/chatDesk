@@ -13,7 +13,7 @@ module.exports = {
   kuduApi: 'https://etisalatdesk.scm.azurewebsites.net/api/zip/site/wwwroot',
   userName: '$etisalatdesk',
   password: 'kLKumc527JppZXW7F18FYliNjGvyp2CnyK5Fa0T0SKDiHzDzMvFN66E3vn3h',
-  lang: 'arb',
+  lang: 'eng',
   botImg: 'https://www.bankingtech.com/files/2016/11/Robot_icon.png',
-  inMemory: true
+  inMemory: false
 };

@@ -2,5 +2,6 @@
 
 module.exports = {
   payBill: require('./payBill'),
-  restoreSIM: require('./restoreSIM')
+  restoreSIM: require('./restoreSIM'),
+  feedback: require('./feedback')
 };

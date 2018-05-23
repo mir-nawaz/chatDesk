@@ -93,6 +93,6 @@ module.exports = [
   },
   function(session) {
     session.userData.planType = '';
-    session.beginDialog('/callBlocked');
+    session.beginDialog('/goodbye');
   }
 ];

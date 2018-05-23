@@ -8,7 +8,10 @@ const lowerTrim = require('../helper/lowerTrim');
 
 module.exports = [
   function(session, args, next) {
-    if (!_.get(session, 'conversationData.phoneNumber')) {
+    if (session.conversationData.issuesReported) {
+      next();
+    }
+    else if (!_.get(session, 'conversationData.phoneNumber')) {
       builder.Prompts.text(session, lang.getText('askContactNumber'));
     }
     else {

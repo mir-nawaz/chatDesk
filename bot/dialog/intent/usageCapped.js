@@ -25,6 +25,6 @@ module.exports = [
 
   },
   function(session) {
-    session.beginDialog('/callBlocked');
+    session.beginDialog('/goodbye');
   }
 ];
