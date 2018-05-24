@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+  This is a sample HTML file which shows how to embed a full-window instance of WebChat.
+  1. Build the project: "npm run build"
+  2. Start a web server: "npm run start"
+  3. Aim your browser at "http://localhost:8000/samples?[parameters as listed below]"
+
+  For ease of testing, several parameters can be set in the query string:
+    * s = Direct Line secret, or
+    * t = Direct Line token (obtained by calling Direct Line's Generate Token)
+    * domain = optionally, the URL of an alternate Direct Line endpoint
+    * webSocket = set to 'true' to use WebSocket to receive messages (currently defaults to false)
+    * userid, username = id (and optionally name) of bot user
+    * botid, botname = id (and optionally name) of bot
+-->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Bot Chat</title>
+
+    <link href="./snippet/botchat.css" rel="stylesheet" />
+
+  </head>
+  <body>
+  <p> Etisalat Help Desk</p>
+    <div id="BotChatGoesHere"></div>
+    <script src="./snippet/botchat.js"></script>
+    <script>
+
+      const params = {};
+      params.s = "uYDRFwvPmtA.cwA.71E.1bXygGOFNG_95mgmdbAtXT8bT1Ji9DlnB0n4HCx1nFM";
+      params.domain = "https://webchat.botframework.com/v3/directline";
+      const users = [{
+	      username: 'Islam',
+	      userid: 'islam',
+	      company: 'Etisalat'
+      },{
+	      username: 'Sameh',
+	      userid: 'sameh',
+	      company: 'Etisalat'
+      },{
+	      username: 'Ali Safri',
+	      userid: 'ali-safri',
+	      company: 'Avanza'
+      },{
+	      username: 'Waqas Mirza',
+	      userid: 'waqas-mirza'
+      }];
+
+      const index = Math.floor(Math.random() * (users.length));
+      let user = users[index];
+
+      user = {
+        id: user['userid'] || 'userid',
+        name: user['username'] || 'Mir Nawaz',
+        company: user['company'] || 'Avanza',
+        title: 'Mr.'
+      };
+
+      const bot = {
+        id: params['botid'] || 'botid',
+        name: params['botname'] || 'botname'
+      };
+
+      window['botchatDebug'] = params['debug'] && params['debug'] === 'true';
+
+      BotChat.App({
+        bot: bot,
+        locale:'en-us',
+        resize: 'window',
+        sendTyping: true,    // defaults to false. set to true to send 'typing' activities to bot (and other users) when user is typing
+        user: user,
+        // locale: 'es-es', // override locale to Spanish
+
+        directLine: {
+          secret: params['s'],
+          token: params['t'],
+          domain: params['domain'],
+          webSocket: true // defaults to true
+        }
+      }, document.getElementById('BotChatGoesHere'));
+    </script>
+  </body>
+</html>
