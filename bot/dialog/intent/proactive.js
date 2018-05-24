@@ -10,13 +10,32 @@ module.exports = [
     let responseText = `${title} ${name}`;
 
     responseText += company ? ` from ${company}, ` : ', ';
-    responseText += 'Welcome to Etisalat help desk, How can i help you!!';
 
-    session.send(responseText);
+    function sendMsg() {
+      if (session.conversationData.wait) {
+        responseText += ' The issue with the network outage is resolved.';
+        session.send(responseText);
+        session.beginDialog('/goodbye');
+        session.conversationData.wait = false;
+      }
+      if (session.conversationData.technicalComplaint) {
+        responseText += ' You complaint number 923839238938493 is resolved.';
+        session.send(responseText);
+        session.beginDialog('/goodbye');
+        session.conversationData.technicalComplaint = false;
+      }
 
-    // TODO save last problem of user and send show to user
-    // session.send('last problem' + ' How may i help you now?');
-    session.endDialog();
+      tryAgain();
+    }
 
+    function tryAgain() {
+      setTimeout(function() {
+        return sendMsg();
+      }, 6000);
+    }
+
+    tryAgain();
+
+    next();
   }
 ];

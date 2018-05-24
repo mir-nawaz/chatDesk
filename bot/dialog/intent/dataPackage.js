@@ -111,17 +111,11 @@ module.exports = [
   function(session, args, next) {
 
     identifyAllEntities(session, args, next);
-    if (!session.userData.contact) {
+    next();
 
-      builder.Prompts.text(session, 'Can you please specify the mobile number?');
-    }
-    else {
-      next();
-    }
   },
   function(session, results) {
 
-    session.userData.contact = results.response || session.userData.contact;
     const msg = new builder.Message(session);
     let isHandled = false;
 
@@ -140,11 +134,10 @@ module.exports = [
       isHandled = true;
     }
     if (isHandled) {
-      session.send(msg).endDialog();
+      session.send(msg);
     }
     else {
       builder.Prompts.choice(session, 'Would you like to find more details about', 'Suggested new plan | Comparison of usage for last month | Social Media usage of the data plan', { listStyle: builder.ListStyle.button });
-      session.endDialog();
     }
     resetAllEntities(session);
   }

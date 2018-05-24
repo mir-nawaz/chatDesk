@@ -27,16 +27,17 @@ function routes(bot) {
   bot.dialog('/goodbye', intents.goodBye);
   bot.dialog('/lastProblem', intents.lastProblem);
   bot.dialog('/errorMessage', intents.errorMessage);
+  bot.dialog('/proactive', intents.proactive);
 
   // LUIS integrated intents
   bot.dialog('/callBlocked', _.concat(findEntities, intents.lastProblem, askContact, intents.callBlocked))
     .triggerAction({ matches: 'callBlocked' });
   bot.dialog('/dataPackage', _.concat(findEntities, askContact, intents.dataPackage))
     .triggerAction({ matches: 'dataPackage' });
-  bot.dialog('/newDataPackage', intents.newDataPackage)
+  bot.dialog('/newDataPackage', _.concat(findEntities, askContact, intents.newDataPackage))
     .triggerAction({ matches: 'newDataPackage' });
-  bot.dialog('/upGradePlan', intents.upgradePlan)
-    .triggerAction({ matches: 'upGradePlan' });
+  bot.dialog('/upgradePlan', _.concat(findEntities, askContact, intents.upgradePlan))
+    .triggerAction({ matches: 'upgradePlan' });
   bot.dialog('/help', intents.help)
     .triggerAction({ matches: 'help' });
   bot.dialog('/greeting', intents.greeting)

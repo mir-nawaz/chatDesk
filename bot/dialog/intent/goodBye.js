@@ -41,7 +41,7 @@ module.exports = [
     }
     else {
       session.send(lang.getText('thankYou')); // check for time and send response
-	    session.endDialog();
+      session.endDialog();
     }
   }
 

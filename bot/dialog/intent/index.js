@@ -19,5 +19,6 @@ module.exports = {
   technicalComplaint: require('./technicalComplaint'),
   dataPackage: require('./dataPackage'),
   newDataPackage: require('./newDataPackage'),
-  upgradePlan: require('./upgradePlan')
+  upgradePlan: require('./upgradePlan'),
+  proactive: require('./proactive')
 };
