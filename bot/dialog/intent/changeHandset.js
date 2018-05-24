@@ -13,9 +13,7 @@ module.exports = [
         .subtitle('')
         .text('Watch this amazing movie which will be replaced by an actual help manual but now enjoy without thinking so much about it')
         .image(builder.CardImage.create(session, 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Big_buck_bunny_poster_big.jpg/220px-Big_buck_bunny_poster_big.jpg'))
-        .media([
-          { url: 'http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4' }
-        ])
+        .media([{ url: 'http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4' }])
         .buttons([
           builder.CardAction.openUrl(session, 'https://peach.blender.org/', 'Learn More')
         ])

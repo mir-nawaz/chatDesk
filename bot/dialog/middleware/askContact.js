@@ -8,10 +8,7 @@ const lowerTrim = require('../helper/lowerTrim');
 
 module.exports = [
   function(session, args, next) {
-    if (session.conversationData.issuesReported) {
-      next();
-    }
-    else if (!_.get(session, 'conversationData.phoneNumber')) {
+    if (!_.get(session, 'conversationData.phoneNumber')) {
       builder.Prompts.text(session, lang.getText('askContactNumber'));
     }
     else {
@@ -21,9 +18,6 @@ module.exports = [
   function(session, results, next) {
     if (results.response) {
       session.conversationData.phoneNumber = results.response;
-      next();
-    }
-    else if (session.conversationData.issuesReported) {
       next();
     }
     else if (!_.get(session, 'conversationData.phoneNumberConfirm')) {
@@ -37,7 +31,7 @@ module.exports = [
     let response = _.get(results, 'response.entity');
     response = response || _.get(results, 'response');
     if (response && lowerTrim(response) === 'yes') {
-      session.conversationData.phoneNumberConfirm = true;
+      next();
     }
     if (response && lowerTrim(response) === 'no') {
       session.conversationData.phoneNumberConfirm = false;

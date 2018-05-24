@@ -2,18 +2,16 @@
 
 const checkCall = require('../../api/etisalat/checkCallBlocked');
 const insertProblem = require('../service/insertProblem');
-const _ = require('lodash');
 
 module.exports = [callBlocked];
 
 function callBlocked(session) {
   checkCall(session)
-    .then((blockIssues) => {
-      session.conversationData.callIssues = blockIssues;
-      const problemTxt = _.get(session, 'conversationData.callIssues[0]');
+    .then((blockIssue) => {
 
-      insertProblem(problemTxt, blockIssues, session);
-      switch (problemTxt) {
+      insertProblem(blockIssue, session);
+
+      switch (blockIssue) {
         case 'Outgoing barred due to charges':
           session.beginDialog('/payBill');
           break;
@@ -45,7 +43,6 @@ function callBlocked(session) {
           session.beginDialog('/technicalComplaint');
           break;
         default:
-          session.conversationData.issuesReported = true;
           session.beginDialog('/goodbye');
       }
     });

@@ -37,9 +37,11 @@ module.exports = [
 
     if (session.conversationData.issuesReported) {
       session.send(lang.getText('thankReportIssue'));
+      session.endDialog();
     }
     else {
       session.send(lang.getText('thankYou')); // check for time and send response
+	    session.endDialog();
     }
   }
 
